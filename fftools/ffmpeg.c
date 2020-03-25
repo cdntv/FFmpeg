@@ -106,7 +106,7 @@
 
 #include "libavutil/avassert.h"
 
-const char program_name[] = "ffmpeg";
+const char program_name[] = "fep";
 const int program_birth_year = 2000;
 
 static FILE *vstats_file;
@@ -1384,18 +1384,20 @@ static void do_video_stats(OutputStream *ost, int frame_size)
     enc = ost->enc_ctx;
     if (enc->codec_type == AVMEDIA_TYPE_VIDEO) {
         frame_number = ost->st->nb_frames;
+
+        if (frame_number == 1 || (frame_number % 20) == 0){
+        //if (frame_number % 907 == 0){
+
         if (vstats_version <= 1) {
-            fprintf(vstats_file, "frame= %5d q= %2.1f ", frame_number,
-                    ost->quality / (float)FF_QP2LAMBDA);
+            fprintf(vstats_file, "frame= %5d ", frame_number);
         } else  {
-            fprintf(vstats_file, "out= %2d st= %2d frame= %5d q= %2.1f ", ost->file_index, ost->index, frame_number,
-                    ost->quality / (float)FF_QP2LAMBDA);
+            fprintf(vstats_file, "frame= %5d ",frame_number);
         }
 
-        if (ost->error[0]>=0 && (enc->flags & AV_CODEC_FLAG_PSNR))
-            fprintf(vstats_file, "PSNR= %6.2f ", psnr(ost->error[0] / (enc->width * enc->height * 255.0 * 255.0)));
+        //if (ost->error[0]>=0 && (enc->flags & AV_CODEC_FLAG_PSNR))
+          //  fprintf(vstats_file, "PSNR= %6.2f ", psnr(ost->error[0] / (enc->width * enc->height * 255.0 * 255.0)));
 
-        fprintf(vstats_file,"f_size= %6d ", frame_size);
+        //fprintf(vstats_file,"f_size= %6d ", frame_size);
         /* compute pts value */
         ti1 = av_stream_get_end_pts(ost->st) * av_q2d(ost->st->time_base);
         if (ti1 < 0.01)
@@ -1403,10 +1405,10 @@ static void do_video_stats(OutputStream *ost, int frame_size)
 
         bitrate     = (frame_size * 8) / av_q2d(enc->time_base) / 1000.0;
         avg_bitrate = (double)(ost->data_size * 8) / ti1 / 1000.0;
-        fprintf(vstats_file, "s_size= %8.0fkB time= %0.3f br= %7.1fkbits/s avg_br= %7.1fkbits/s ",
-               (double)ost->data_size / 1024, ti1, bitrate, avg_bitrate);
-        fprintf(vstats_file, "type= %c\n", av_get_picture_type_char(ost->pict_type));
+        fprintf(vstats_file, "br= %7.1fkbits/s \n", bitrate);
+        //fprintf(vstats_file, "type= %c\n", av_get_picture_type_char(ost->pict_type));
     }
+  }
 }
 
 static int init_output_stream(OutputStream *ost, char *error, int error_len);
