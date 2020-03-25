@@ -78,8 +78,8 @@ typedef struct InputFile {
     int       nb_streams;
 } InputFile;
 
-const char program_name[] = "ffprobe";
-const int program_birth_year = 2007;
+const char program_name[] = "MSE-FEP (ffprobe)";
+const int program_birth_year = 2020;
 
 static int do_bitexact = 0;
 static int do_count_frames = 0;

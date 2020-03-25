@@ -60,8 +60,8 @@
 
 #include <assert.h>
 
-const char program_name[] = "ffplay";
-const int program_birth_year = 2003;
+const char program_name[] = "MSE-FEP (ffplay)";
+const int program_birth_year = 2020;
 
 #define MAX_QUEUE_SIZE (15 * 1024 * 1024)
 #define MIN_FRAMES 25

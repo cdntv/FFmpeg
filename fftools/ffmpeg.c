@@ -106,8 +106,8 @@
 
 #include "libavutil/avassert.h"
 
-const char program_name[] = "fep";
-const int program_birth_year = 2000;
+const char program_name[] = "MSE-FEP (FFmpeg)";
+const int program_birth_year = 2020;
 
 static FILE *vstats_file;
 
@@ -1385,7 +1385,7 @@ static void do_video_stats(OutputStream *ost, int frame_size)
     if (enc->codec_type == AVMEDIA_TYPE_VIDEO) {
         frame_number = ost->st->nb_frames;
 
-        if (frame_number == 1 || (frame_number % 20) == 0){
+        if (frame_number == 1 || (frame_number % 15) == 0){
         //if (frame_number % 907 == 0){
 
         if (vstats_version <= 1) {
